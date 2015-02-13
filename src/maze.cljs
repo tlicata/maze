@@ -1,3 +1,5 @@
 (ns maze.core)
 
-(.log js/console "Hello, World!")
+(enable-console-print!)
+
+(println "Hello, World!")
