@@ -4,10 +4,27 @@
 
 (enable-console-print!)
 
+;; From "Clojure Programming", page 145.
+;;
+;;   Wilson's algorithm is a carving algorithm; it takes a fully walled
+;;   "maze" and carves an actual maze out of it by removing some
+;;   walls. Its principle is:
+;;
+;;   1. Randomly pick a location and mark it as _visited_.
+;;   2. Randomly pick a location that isn't _visited_ yet - if there is
+;;      none, return the maze.
+;;   3. Perform a random walk starting from the newly picked location
+;;      until you stumble on a location that is _visited_ - if you pass
+;;      through a location more than once during the random walk, always
+;;      remember the direction you take to leave it.
+;;   4. Mark all the locations of the random walk as _visited_, and
+;;      remove walls according to the last known "exit direction".
+;;   5. Repeat from 2.
 
 (def segment 12)
 (def total 40)
 
+;; Creates a fully walled "maze" we will carve a path through.
 (defn grid [w h]
   (set (concat
         ;; horizontal walls
