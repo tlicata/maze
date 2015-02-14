@@ -4,7 +4,6 @@
 
 (enable-console-print!)
 
-(println "Hello, World!")
 
 (def segment 12)
 (def total 40)
