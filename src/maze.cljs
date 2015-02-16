@@ -53,7 +53,7 @@
                  (reduce disj unvisited (keys steps))))
         walls))))
 
-(def walls (maze (grid total total)))
+(def walls (atom (maze (grid total total))))
 
 (defn render-walls [data owner]
   (reify
@@ -69,7 +69,11 @@
                                      :y2 (+ 1 (* y2 segment))
                                      :stroke "black"
                                      :strokeWidth 4})))
-                  (:walls data))))))
+                  data)))))
 
-(om/root render-walls {:walls walls}
+(om/root render-walls walls
          {:target (. js/document (getElementById "container"))})
+
+(js/setInterval (fn []
+                  (reset! walls (maze (grid total total))))
+                1000)
