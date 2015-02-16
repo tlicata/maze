@@ -34,7 +34,26 @@
         (for [x (range w) y (range (dec h))]
           #{[x y] [x (inc y)]}))))
 
-(def walls (grid total total))
+(defn maze
+  "Returns a random maze carved out of walls; walls is a set of 2-item
+  sets #{a b} where a and b are locations. Locations are 2-item
+  vectors [x y] where x and y are coordinates in a grid.
+  The returned maze is a set of the remaining walls"
+  [walls]
+  (let [paths (reduce (fn [index [a b]]
+                        (merge-with into index {a [b] b [a]}))
+                      {} (map seq walls))
+        start-loc (rand-nth (keys paths))]
+    (loop [walls walls
+           unvisited (disj (set (keys paths)) start-loc)]
+      (if-let [loc (when-let [s (seq unvisited)] (rand-nth s))]
+        (let [walk (iterate (comp rand-nth paths) loc)
+              steps (zipmap (take-while unvisited walk) (next walk))]
+          (recur (reduce disj walls (map set steps))
+                 (reduce disj unvisited (keys steps))))
+        walls))))
+
+(def walls (maze (grid total total)))
 
 (defn render-walls [data owner]
   (reify
