@@ -1,10 +1,10 @@
 (defproject maze "0.1.0-SNAPSHOT"
   :description "Maze generation in ClojureScript"
   :url ""
-  :dependencies [[org.clojure/clojure "1.6.0"]
-                 [org.clojure/clojurescript "0.0-2843"]
+  :dependencies [[org.clojure/clojure "1.8.0"]
+                 [org.clojure/clojurescript "1.9.494"]
                  [org.omcljs/om "0.8.8"]]
-  :plugins [[lein-cljsbuild "1.0.4"]]
+  :plugins [[lein-cljsbuild "1.1.5"]]
   :source-paths ["src" "target/classes"]
   :clean-targets ["out" "out-adv" "target"]
   :cljsbuild {
